@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+    db:
+        image: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: open
+            MYSQL_USER: open
+            MYSQL_PASSWORD: open
+    php:
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www/app
+            - ./var/log:/var/www/app/var/log:delegated
+            - ./vendor:/var/www/app/vendor:delegated
+            - cache:/var/www/app/var/cache
+    nginx:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        volumes:
+            - ./public:/var/www/app/public
+        depends_on:
+            - php
+        ports:
+            - "80:80"
+    adminer:
+        image: adminer
+        ports:
+            - "8080:8080"
+
+volumes:
+    cache: ~
