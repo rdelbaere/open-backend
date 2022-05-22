@@ -7,6 +7,9 @@
 /var/
 /vendor/
 
+# JWT
+/config/jwt/*.pem
 
 # IDE
 .idea/
+
