@@ -82,4 +82,7 @@ class App
 
         return $this;
     }
+
+    // TODO - Manage installed app
+    public bool $installed = true;
 }

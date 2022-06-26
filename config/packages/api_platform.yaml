@@ -2,5 +2,7 @@ api_platform:
     enable_docs: false
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
+    formats:
+        json: [ 'application/json' ]
     patch_formats:
         json: ['application/merge-patch+json']

@@ -1,18 +1,15 @@
 entries:
-    - name: "Paramètres"
-      icon:
-          type: "material"
-          details:
-              name: "settings"
-              color: "#b2bec3"
-      runtime: "test"
-      isDefault: true
     - name: "Calculette"
       icon:
           type: material
-          details:
-              name: "calculate"
-              color: "#b71540"
+          name: "calculate"
+          color: "#b71540"
       runtime: "calculator"
       isDefault: false
-
+    - name: "Paramètres"
+      icon:
+          type: "material"
+          name: "settings"
+          color: "#b2bec3"
+      runtime: "test"
+      isDefault: true
