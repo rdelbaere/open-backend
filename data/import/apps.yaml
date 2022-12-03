@@ -5,18 +5,18 @@ entries:
           name: "calculate"
           color: "#b71540"
       runtime: "calculator"
-      isDefault: false
+      byDefault: false
     - name: "AppCenter"
       icon:
           type: "material"
           name: "apps"
           color: "#d35400"
       runtime: "appcenter"
-      isDefault: true
+      byDefault: true
     - name: "Paramètres"
       icon:
           type: "material"
           name: "settings"
           color: "#b2bec3"
       runtime: "test"
-      isDefault: true
+      byDefault: true

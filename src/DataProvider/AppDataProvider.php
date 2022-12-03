@@ -50,7 +50,7 @@ class AppDataProvider implements ContextAwareCollectionDataProviderInterface, De
     private function populateInstalled(App $app): void
     {
         $user = $this->security->getUser();
-        $installed = $app->isIsDefault() || $user->getSystem()->getApps()->contains($app);
+        $installed = $app->isByDefault() || $user->getSystem()->getApps()->contains($app);
         $app->setInstalled($installed);
     }
 }

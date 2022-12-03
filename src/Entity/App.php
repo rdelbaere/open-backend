@@ -28,7 +28,7 @@ class App
     private string $runtime;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $isDefault = false;
+    private bool $byDefault = false;
 
     private bool $installed;
 
@@ -73,14 +73,14 @@ class App
         return $this;
     }
 
-    public function isIsDefault(): ?bool
+    public function isByDefault(): ?bool
     {
-        return $this->isDefault;
+        return $this->byDefault;
     }
 
-    public function setIsDefault(bool $isDefault): self
+    public function setByDefault(bool $byDefault): self
     {
-        $this->isDefault = $isDefault;
+        $this->byDefault = $byDefault;
 
         return $this;
     }
