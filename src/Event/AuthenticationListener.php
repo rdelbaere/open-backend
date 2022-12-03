@@ -11,8 +11,7 @@ class AuthenticationListener
             'status' => true,
             'data' => $event->getData(),
         ];
-
-
+        
         $event->setData($payload);
     }
 }
