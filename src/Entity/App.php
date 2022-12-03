@@ -3,13 +3,27 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\App\AppInstallController;
+use App\Controller\App\AppUninstallController;
 use App\Repository\AppRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppRepository::class)]
 #[ApiResource(
     collectionOperations: ['get'],
-    itemOperations: ['get'],
+    itemOperations: [
+        'get',
+        'install' => [
+            'method' => 'POST',
+            'path' => '/apps/{id}/install',
+            'controller' => AppInstallController::class,
+        ],
+        'uninstall' => [
+            'method' => 'POST',
+            'path' => '/apps/{id}/uninstall',
+            'controller' => AppUninstallController::class,
+        ],
+    ],
 )]
 class App
 {
