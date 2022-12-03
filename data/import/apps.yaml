@@ -6,6 +6,13 @@ entries:
           color: "#b71540"
       runtime: "calculator"
       isDefault: false
+    - name: "AppCenter"
+      icon:
+          type: "material"
+          name: "apps"
+          color: "#d35400"
+      runtime: "appcenter"
+      isDefault: true
     - name: "Paramètres"
       icon:
           type: "material"
