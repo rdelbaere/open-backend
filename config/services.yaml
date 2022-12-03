@@ -12,6 +12,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\DataProvider\AppDataProvider:
+        bind:
+            $collectionDataProvider: '@api_platform.doctrine.orm.default.collection_data_provider'
+            $itemDataProvider: '@api_platform.doctrine.orm.default.item_data_provider'
+
+
     App\Event\AuthenticationListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess }

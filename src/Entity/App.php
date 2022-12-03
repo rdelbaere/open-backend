@@ -30,6 +30,8 @@ class App
     #[ORM\Column(type: 'boolean')]
     private bool $isDefault = false;
 
+    private bool $installed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +85,13 @@ class App
         return $this;
     }
 
-    // TODO - Manage installed app
-    public bool $installed = true;
+    public function isInstalled(): bool
+    {
+        return $this->installed;
+    }
+
+    public function setInstalled(bool $installed): void
+    {
+        $this->installed = $installed;
+    }
 }

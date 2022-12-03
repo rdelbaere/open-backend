@@ -43,7 +43,7 @@ class System
 
         return $this;
     }
-    
+
     public function getApps(): Collection
     {
         return $this->apps;
