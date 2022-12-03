@@ -24,6 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
             'controller' => AppUninstallController::class,
         ],
     ],
+    order: ['name' => 'ASC'],
 )]
 class App
 {
