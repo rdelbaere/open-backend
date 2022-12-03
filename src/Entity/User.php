@@ -24,6 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: System::class, cascade: ['persist', 'remove'])]
+    private System $system;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +72,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getSystem(): ?System
+    {
+        return $this->system;
+    }
+
+    public function setSystem(System $system): self
+    {
+        if ($system->getUser() !== $this) {
+            $system->setUser($this);
+        }
+
+        $this->system = $system;
 
         return $this;
     }
