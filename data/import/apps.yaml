@@ -9,7 +9,7 @@ entries:
     - name: "AppCenter"
       icon:
           type: "material"
-          name: "apps"
+          name: "grid_view"
           color: "#d35400"
       runtime: "appcenter"
       byDefault: true
