@@ -18,5 +18,5 @@ entries:
           type: "material"
           name: "settings"
           color: "#b2bec3"
-      runtime: "test"
+      runtime: "settings"
       byDefault: true
