@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Model\Configuration;
 use App\Repository\SystemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,12 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SystemRepository::class)]
+#[ApiResource(
+    collectionOperations: [],
+    itemOperations: [
+        'get' => [
+            'security' => 'is_granted("SYSTEM_READ", object)'
+        ]
+    ],
+    normalizationContext: ['groups' => ['system:read']],
+
+)]
 class System
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:read'])]
+    #[Groups(['system:read', 'user:read'])]
     private int $id;
 
     #[ORM\OneToOne(inversedBy: 'system', targetEntity: User::class, cascade: ['persist', 'remove'])]
@@ -23,6 +34,7 @@ class System
     private User $user;
 
     #[ORM\Column(type: 'object')]
+    #[Groups(['system:read'])]
     private Configuration $configuration;
 
     #[ORM\ManyToMany(targetEntity: App::class)]
