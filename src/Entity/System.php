@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\Configuration;
 use App\Repository\SystemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,9 +23,13 @@ class System
     #[ORM\ManyToMany(targetEntity: App::class)]
     private Collection $apps;
 
+    #[ORM\Column(type: 'object')]
+    private Configuration $configuration;
+
     public function __construct()
     {
         $this->apps = new ArrayCollection();
+        $this->configuration = new Configuration();
     }
     
     public function getId(): ?int
@@ -40,6 +45,18 @@ class System
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getConfiguration(): ?Configuration
+    {
+        return $this->configuration;
+    }
+
+    public function setConfiguration(Configuration $configuration): self
+    {
+        $this->configuration = $configuration;
 
         return $this;
     }
