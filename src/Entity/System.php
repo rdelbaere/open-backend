@@ -20,11 +20,11 @@ class System
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
-    #[ORM\ManyToMany(targetEntity: App::class)]
-    private Collection $apps;
-
     #[ORM\Column(type: 'object')]
     private Configuration $configuration;
+
+    #[ORM\ManyToMany(targetEntity: App::class)]
+    private Collection $apps;
 
     public function __construct()
     {
