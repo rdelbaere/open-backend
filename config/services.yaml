@@ -19,6 +19,10 @@ services:
             $collectionProvider: '@api_platform.doctrine.orm.state.collection_provider'
             $itemProvider: '@api_platform.doctrine.orm.state.item_provider'
 
+    App\State\FilesystemProvider:
+        bind:
+            $itemProvider: '@api_platform.doctrine.orm.state.item_provider'
+
     App\Event\AuthenticationListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess }
