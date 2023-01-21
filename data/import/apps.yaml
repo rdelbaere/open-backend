@@ -1,29 +1,36 @@
 entries:
-    - name: "Calculette"
-      icon:
-          type: material
-          name: "calculate"
-          color: "#b71540"
-      runtime: "calculator"
-      byDefault: false
-    - name: "AppCenter"
-      icon:
-          type: "material"
-          name: "grid_view"
-          color: "#d35400"
-      runtime: "appcenter"
-      byDefault: true
-    - name: "Panic"
-      icon:
-          type: "material"
-          name: "mood_bad"
-          color: "#c0392b"
-      runtime: "panic"
-      byDefault: false
-    - name: "Paramètres"
-      icon:
-          type: "material"
-          name: "settings"
-          color: "#b2bec3"
-      runtime: "settings"
-      byDefault: true
+    -   name: "AppCenter"
+        icon:
+            type: "material"
+            name: "grid_view"
+            color: "#d35400"
+        runtime: "appcenter"
+        byDefault: true
+    -   name: "Fichiers"
+        icon:
+            type: "material"
+            name: "folder"
+            color: "#3867d6"
+        runtime: "fileExplorer"
+        byDefault: true
+    -   name: "Paramètres"
+        icon:
+            type: "material"
+            name: "settings"
+            color: "#b2bec3"
+        runtime: "settings"
+        byDefault: true
+    -   name: "Calculette"
+        icon:
+            type: material
+            name: "calculate"
+            color: "#b71540"
+        runtime: "calculator"
+        byDefault: false
+    -   name: "Panic"
+        icon:
+            type: "material"
+            name: "mood_bad"
+            color: "#c0392b"
+        runtime: "panic"
+        byDefault: false
