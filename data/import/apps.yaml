@@ -13,6 +13,13 @@ entries:
           color: "#d35400"
       runtime: "appcenter"
       byDefault: true
+    - name: "Panic"
+      icon:
+          type: "material"
+          name: "mood_bad"
+          color: "#c0392b"
+      runtime: "panic"
+      byDefault: false
     - name: "Paramètres"
       icon:
           type: "material"
