@@ -5,16 +5,19 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Model\Configuration;
 use App\Repository\SystemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SystemRepository::class)]
 #[ApiResource(
     operations: [
+        new Post(denormalizationContext: ['groups' => ['system:init']]),
         new Get(security: 'is_granted("SYSTEM_READ", object)'),
         new Patch(security: 'is_granted("SYSTEM_WRITE", object)')
     ],
@@ -31,6 +34,8 @@ class System
 
     #[ORM\OneToOne(inversedBy: 'system', targetEntity: User::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Groups(['system:init'])]
     private User $user;
 
     #[ORM\Column(type: 'json_document')]
@@ -40,10 +45,16 @@ class System
     #[ORM\ManyToMany(targetEntity: App::class)]
     private Collection $apps;
 
+    #[ORM\OneToOne(inversedBy: 'system', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['system:read'])]
+    private Filesystem $filesystem;
+
     public function __construct()
     {
         $this->apps = new ArrayCollection();
         $this->configuration = new Configuration();
+        $this->filesystem = new Filesystem();
     }
     
     public function getId(): ?int
@@ -92,6 +103,18 @@ class System
     public function removeApp(App $app): self
     {
         $this->apps->removeElement($app);
+
+        return $this;
+    }
+
+    public function getFilesystem(): Filesystem
+    {
+        return $this->filesystem;
+    }
+
+    public function setFilesystem(Filesystem $filesystem): self
+    {
+        $this->filesystem = $filesystem;
 
         return $this;
     }
