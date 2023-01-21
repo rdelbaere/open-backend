@@ -12,11 +12,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\DataProvider\AppDataProvider:
+    App\State\AppProvider:
         bind:
-            $collectionDataProvider: '@api_platform.doctrine.orm.default.collection_data_provider'
-            $itemDataProvider: '@api_platform.doctrine.orm.default.item_data_provider'
-
+            $collectionProvider: '@api_platform.doctrine.orm.state.collection_provider'
+            $itemProvider: '@api_platform.doctrine.orm.state.item_provider'
 
     App\Event\AuthenticationListener:
         tags:

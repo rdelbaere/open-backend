@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 use App\Model\Configuration;
 use App\Repository\SystemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,17 +14,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SystemRepository::class)]
 #[ApiResource(
-    collectionOperations: [],
-    itemOperations: [
-        'get' => [
-            'security' => 'is_granted("SYSTEM_READ", object)'
-        ],
-        'patch' => [
-            'security' => 'is_granted("SYSTEM_WRITE", object)'
-        ]
+    operations: [
+        new Get(security: 'is_granted("SYSTEM_READ", object)'),
+        new Patch(security: 'is_granted("SYSTEM_WRITE", object)')
     ],
-    denormalizationContext: ['groups' => ['system:write']],
     normalizationContext: ['groups' => ['system:read']],
+    denormalizationContext: ['groups' => ['system:write']]
 )]
 class System
 {
@@ -73,7 +70,7 @@ class System
 
     public function setConfiguration(Configuration $configuration): self
     {
-        $this->configuration = clone($configuration);
+        $this->configuration = clone $configuration;
 
         return $this;
     }

@@ -2,29 +2,24 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Controller\App\AppInstallController;
 use App\Controller\App\AppUninstallController;
 use App\Repository\AppRepository;
+use App\State\AppProvider;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppRepository::class)]
 #[ApiResource(
-    collectionOperations: ['get'],
-    itemOperations: [
-        'get',
-        'install' => [
-            'method' => 'POST',
-            'path' => '/apps/{id}/install',
-            'controller' => AppInstallController::class,
-        ],
-        'uninstall' => [
-            'method' => 'POST',
-            'path' => '/apps/{id}/uninstall',
-            'controller' => AppUninstallController::class,
-        ],
-    ],
-    order: ['name' => 'ASC'],
+    operations: [
+        new GetCollection(provider: AppProvider::class),
+        new Get(provider: AppProvider::class),
+        new Post(uriTemplate: '/apps/{id}/install', controller: AppInstallController::class),
+        new Post(uriTemplate: '/apps/{id}/uninstall', controller: AppUninstallController::class)
+    ], order: ['name' => 'ASC']
 )]
 class App
 {

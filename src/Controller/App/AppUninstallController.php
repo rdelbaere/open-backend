@@ -5,7 +5,7 @@ namespace App\Controller\App;
 use App\Entity\App;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class AppUninstallController extends AbstractController
 {
