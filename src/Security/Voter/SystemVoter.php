@@ -11,7 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SystemVoter extends Voter
 {
     public const READ = 'SYSTEM_READ';
-    public const ATTRIBUTES = [self::READ];
+    public const WRITE = 'SYSTEM_WRITE';
+    public const ATTRIBUTES = [self::READ, self::WRITE];
 
     public function __construct(private Security $security) {}
 

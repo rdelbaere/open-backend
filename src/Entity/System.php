@@ -16,10 +16,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
     itemOperations: [
         'get' => [
             'security' => 'is_granted("SYSTEM_READ", object)'
+        ],
+        'patch' => [
+            'security' => 'is_granted("SYSTEM_WRITE", object)'
         ]
     ],
+    denormalizationContext: ['groups' => ['system:write']],
     normalizationContext: ['groups' => ['system:read']],
-
 )]
 class System
 {
@@ -33,8 +36,8 @@ class System
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
-    #[ORM\Column(type: 'object')]
-    #[Groups(['system:read'])]
+    #[ORM\Column(type: 'json_document')]
+    #[Groups(['system:read', 'system:write'])]
     private Configuration $configuration;
 
     #[ORM\ManyToMany(targetEntity: App::class)]
@@ -70,7 +73,7 @@ class System
 
     public function setConfiguration(Configuration $configuration): self
     {
-        $this->configuration = $configuration;
+        $this->configuration = clone($configuration);
 
         return $this;
     }

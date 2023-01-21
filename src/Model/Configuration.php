@@ -6,7 +6,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class Configuration
 {
-    #[Groups('system:read')]
+    #[Groups(['system:read', 'system:write'])]
     private string $wallpaper = 'rocket.jpg';
 
     public function getWallpaper(): string
