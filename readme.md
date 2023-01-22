@@ -10,7 +10,8 @@ Backend service for [Open](https://github.com/rdelbaere/open)
 * Execute `docker compose exec php composer install`.
 * Execute `docker compose exec php php bin/console doctrine:migrations:migrate`.
 * Execute `docker compose exec php php bin/console lexik:jwt:generate-keypair`.
-
+* Execute `docker compose exec php php bin/console app:import:apps`.
+* 
 ### Installation on webserver
 
 > :warning: Do not use Docker configuration in a public environment
@@ -21,3 +22,4 @@ Backend service for [Open](https://github.com/rdelbaere/open)
 * Execute `php bin/console doctrine:database:create`.
 * Execute `php bin/console doctrine:migrations:migrate`.
 * Execute `php bin/console lexik:jwt:generate-keypair`.
+* Execute `php bin/console app:import:apps`.
