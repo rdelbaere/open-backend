@@ -3,6 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Filesystem;
+use App\Model\Filesystem\Directory;
+use App\Model\Filesystem\File;
+use App\Model\Filesystem\Resource;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem as FilesystemManager;
 use Symfony\Component\Finder\Finder;
@@ -15,11 +18,12 @@ class FilesystemService
         $this->config = $parameterBag->get('filesystem');
     }
 
-    public function explore(Filesystem $filesystem): void
+    public function explore(Filesystem $filesystem): Directory
     {
         $path = $this->buildPath($filesystem);
-        $finder = new Finder();
-        $finder->in($path);
+        $rootDirectory = new Directory();
+        $this->buildTree($path, $rootDirectory);
+        return $rootDirectory;
     }
 
     public function prepare(Filesystem $filesystem): void
@@ -30,6 +34,27 @@ class FilesystemService
 
     private function buildPath(Filesystem $filesystem): string
     {
-        return sprintf('%s/%s/', $this->config['basePath'], $filesystem->getId());
+        return sprintf('%s/%s', $this->config['basePath'], $filesystem->getId());
+    }
+
+    private function buildTree(string $path, Directory $parent = null)
+    {
+        $finder = new Finder();
+        $finder->depth(0)->in($path);
+
+        foreach ($finder as $entry) {
+            if ($entry->isDir()) {
+                $resource = new Directory();
+                $this->buildTree($entry->getRealPath(), $resource);
+            } else {
+                $resource = new File();
+            }
+
+            $resource->setName($entry->getFilename());
+            $resource->setPath($entry->getRelativePath());
+            $resource->setParent($parent);
+
+            $parent?->addChild($resource);
+        }
     }
 }

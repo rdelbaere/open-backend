@@ -4,6 +4,7 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Entity\Filesystem;
 use App\Service\FilesystemService;
 
 class FilesystemProvider implements ProviderInterface
@@ -13,10 +14,13 @@ class FilesystemProvider implements ProviderInterface
         private FilesystemService $filesystemService,
     ){}
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): Filesystem
     {
         $filesystem = $this->itemProvider->provide($operation, $uriVariables, $context);
-        $this->filesystemService->explore($filesystem);
+
+        $rootDirectory = $this->filesystemService->explore($filesystem);
+        $filesystem->setRootDirectory($rootDirectory);
+
         return $filesystem;
     }
 }

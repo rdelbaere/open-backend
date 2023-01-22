@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use App\Model\Filesystem\Directory;
 use App\Repository\FileSystemRepository;
 use App\State\FilesystemProvider;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,9 @@ class Filesystem
     #[ORM\OneToOne(mappedBy: 'filesystem', cascade: ['persist', 'remove'])]
     private ?System $system = null;
 
+    #[Groups(['filesystem:read'])]
+    private Directory $rootDirectory;
+
     public function getId(): Uuid
     {
         return $this->id;
@@ -50,6 +54,18 @@ class Filesystem
         }
 
         $this->system = $system;
+
+        return $this;
+    }
+
+    public function getRootDirectory(): Directory
+    {
+        return $this->rootDirectory;
+    }
+
+    public function setRootDirectory(Directory $rootDirectory): self
+    {
+        $this->rootDirectory = $rootDirectory;
 
         return $this;
     }
