@@ -7,10 +7,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 abstract class Resource
 {
     #[Groups(['filesystem:read'])]
-    private string $name;
+    private string $name = '';
 
     #[Groups(['filesystem:read'])]
-    private string $path;
+    private string $path = '';
 
     private ?Resource $parent;
 

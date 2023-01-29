@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\Filesystem;
 use App\Model\Filesystem\Directory;
 use App\Model\Filesystem\File;
-use App\Model\Filesystem\Resource;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem as FilesystemManager;
 use Symfony\Component\Finder\Finder;
@@ -37,23 +36,22 @@ class FilesystemService
         return sprintf('%s/%s', $this->config['basePath'], $filesystem->getId());
     }
 
-    private function buildTree(string $path, Directory $parent = null)
+    private function buildTree(string $path, Directory $parent = null): void
     {
         $finder = new Finder();
         $finder->depth(0)->in($path);
 
         foreach ($finder as $entry) {
-            if ($entry->isDir()) {
-                $resource = new Directory();
-                $this->buildTree($entry->getRealPath(), $resource);
-            } else {
-                $resource = new File();
-            }
+            $resource = $entry->isDir() ? new Directory() : new File();
 
             $resource->setName($entry->getFilename());
-            $resource->setPath($entry->getRelativePath());
-            $resource->setParent($parent);
+            $resource->setPath(sprintf('%s/%s', $parent->getPath(), $entry->getRelativePathname()));
 
+            if ($resource instanceof Directory) {
+                $this->buildTree($entry->getRealPath(), $resource);
+            }
+
+            $resource->setParent($parent);
             $parent?->addChild($resource);
         }
     }
