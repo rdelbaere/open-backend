@@ -18,7 +18,7 @@ use Symfony\Component\Uid\Uuid;
         new Get(
             security: 'is_granted("FILESYSTEM_READ", object)',
             provider: FilesystemProvider::class
-        )
+        ),
     ],
     normalizationContext: ['groups' => ['filesystem:read']]
 )]
