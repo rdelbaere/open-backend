@@ -1,0 +1,4 @@
+default: Une erreur est survenue, veuillez réessayer plus tard
+
+filesystem:
+    resource_already_exist: Une ressource porte déjà ce nom

@@ -6,11 +6,18 @@ use App\Entity\Filesystem;
 use App\Model\Filesystem\Directory;
 use App\Model\Filesystem\File;
 use App\Model\Filesystem\Resource;
+use App\Util\Exception\BackendFilesystemException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as FilesystemManager;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class FilesystemService
 {
@@ -50,6 +57,14 @@ class FilesystemService
     public function createResource(Filesystem $filesystem, Resource $resource): void
     {
         $path = sprintf('%s/%s/%s', $this->buildPath($filesystem), $resource->getPath(), $resource->getName());
+
+        if ($this->manager->exists($path)) {
+            throw new BackendFilesystemException(
+                statusCode: Response::HTTP_BAD_REQUEST,
+                message: 'filesystem.resource_already_exist',
+                path: $path,
+            );
+        }
 
         if ($resource instanceof Directory) {
             $this->manager->mkdir($path);
