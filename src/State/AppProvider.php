@@ -21,7 +21,7 @@ class AppProvider implements ProviderInterface
         if (!$operation instanceof CollectionOperationInterface) {
             $app = $this->itemProvider->provide($operation, $uriVariables, $context);
 
-            if (!$app) {
+            if ($app) {
                 $this->populateInstalled($app);
             }
 
