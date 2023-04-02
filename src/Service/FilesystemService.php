@@ -47,7 +47,7 @@ class FilesystemService
         return $this->denormalizer->denormalize($data, $type);
     }
 
-    public function createResource(Filesystem $filesystem, Resource $resource)
+    public function createResource(Filesystem $filesystem, Resource $resource): void
     {
         $path = sprintf('%s/%s/%s', $this->buildPath($filesystem), $resource->getPath(), $resource->getName());
 

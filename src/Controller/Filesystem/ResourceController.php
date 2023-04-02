@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/filesystems/{id}/resource', 'filesystem_resource_')]
 class ResourceController extends AbstractController
@@ -15,6 +16,7 @@ class ResourceController extends AbstractController
     public function __construct(private FilesystemService $filesystemService) {}
 
     #[Route('', 'post', methods: ['POST'])]
+    #[IsGranted('FILESYSTEM_WRITE', 'filesystem')]
     public function post(Request $request, Filesystem $filesystem): Response
     {
         $resource = $this->filesystemService->deserializeResource($request->getContent());
