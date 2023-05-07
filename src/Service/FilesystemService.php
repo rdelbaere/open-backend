@@ -53,6 +53,9 @@ class FilesystemService
     public function createResource(Filesystem $filesystem, Resource $resource): void
     {
         $path = sprintf('%s/%s/%s', $this->buildPath($filesystem), $resource->getPath(), $resource->getName());
+        if ($resource instanceof File) {
+            $path = sprintf('%s.%s', $path, $resource->getTempfile()->getFiletype());
+        }
 
         if ($this->manager->exists($path)) {
             throw new BackendFilesystemException(
@@ -66,8 +69,8 @@ class FilesystemService
             $this->manager->mkdir($path);
         } else if ($resource instanceof File) {
             $tempfilePath = $this->tempfileService->buildPath($resource->getTempfile());
-            $path = sprintf('%s.%s', $path, $resource->getTempfile()->getFiletype());
             $this->manager->rename($tempfilePath, $path);
+            $this->tempfileService->consumed($resource->getTempfile());
         }
     }
 

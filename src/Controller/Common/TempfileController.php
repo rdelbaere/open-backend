@@ -3,7 +3,6 @@
 namespace App\Controller\Common;
 
 use App\Service\TempfileService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class TempfileController extends AbstractController
 {
     public function __construct(
-        private EntityManagerInterface $em,
         private TempfileService $tempfileService
     ) {}
 
@@ -22,9 +20,6 @@ class TempfileController extends AbstractController
     {
         $uploadedFile = $request->files->get('file');
         $tempfile = $this->tempfileService->preload($uploadedFile, $this->getUser());
-
-        $this->em->persist($tempfile);
-        $this->em->flush();
 
         return $this->json([
             'status' => true,
