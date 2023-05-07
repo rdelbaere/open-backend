@@ -22,7 +22,8 @@ class FilesystemService
         private DecoderInterface $decoder,
         private DenormalizerInterface $denormalizer,
         private FilesystemManager $manager,
-        ParameterBagInterface $parameterBag
+        ParameterBagInterface $parameterBag,
+        private TempfileService $tempfileService
     ){
         $this->config = $parameterBag->get('filesystem');
     }
@@ -63,6 +64,10 @@ class FilesystemService
 
         if ($resource instanceof Directory) {
             $this->manager->mkdir($path);
+        } else if ($resource instanceof File) {
+            $tempfilePath = $this->tempfileService->buildPath($resource->getTempfile());
+            $path = sprintf('%s.%s', $path, $resource->getTempfile()->getFiletype());
+            $this->manager->rename($tempfilePath, $path);
         }
     }
 

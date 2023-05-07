@@ -1,6 +1,8 @@
 parameters:
     filesystem:
         basePath: '%kernel.project_dir%/storage/filesystem'
+    tempfile:
+        basePath: '%kernel.project_dir%/storage/tempfile'
 
 services:
     _defaults:
