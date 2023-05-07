@@ -2,3 +2,7 @@ default: Une erreur est survenue, veuillez réessayer ultérieurement
 
 filesystem:
     resource_already_exist: Une ressource porte déjà ce nom
+
+tempfile:
+    invalid_file: Ce fichier est invalide
+    forbidden: Vous n'avez pas le droit d'utiliser ce fichier

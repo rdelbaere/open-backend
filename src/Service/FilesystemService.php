@@ -68,9 +68,7 @@ class FilesystemService
         if ($resource instanceof Directory) {
             $this->manager->mkdir($path);
         } else if ($resource instanceof File) {
-            $tempfilePath = $this->tempfileService->buildPath($resource->getTempfile());
-            $this->manager->rename($tempfilePath, $path);
-            $this->tempfileService->consumed($resource->getTempfile());
+            $this->tempfileService->consumed($resource->getTempfile(), $path);
         }
     }
 

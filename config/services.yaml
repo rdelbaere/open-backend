@@ -3,6 +3,12 @@ parameters:
         basePath: '%kernel.project_dir%/storage/filesystem'
     tempfile:
         basePath: '%kernel.project_dir%/storage/tempfile'
+        maxSize: 20M
+        allowedMimeTypes:
+            - image/svg+xml
+            - image/gif
+            - image/jpeg
+            - image/png
 
 services:
     _defaults:
